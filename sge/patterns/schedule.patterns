@@ -1,0 +1,49 @@
+#4486192:1:RESERVING:1415625249:173700:P:qlc-O:slots:64.000000
+#4486192:1:RESERVING:1415625249:173700:G:global:penalty:2700.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o02.data.legion.ucl.ac.uk:threads:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o02.data.legion.ucl.ac.uk:memory:12884901888.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o02.data.legion.ucl.ac.uk:xex:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o02.data.legion.ucl.ac.uk:tmpfs:4294967296.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:zex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:yex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:wex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:vex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:uex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:tex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:sex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:rex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o02.data.legion.ucl.ac.uk:slots:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o08.data.legion.ucl.ac.uk:threads:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o08.data.legion.ucl.ac.uk:memory:12884901888.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o08.data.legion.ucl.ac.uk:xex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:zex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:yex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:wex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:vex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:uex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:tex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:sex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:rex:12.000000
+#4486192:1:RESERVING:1415625249:173700:Q:Ognian@node-o08.data.legion.ucl.ac.uk:slots:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o09.data.legion.ucl.ac.uk:threads:12.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o09.data.legion.ucl.ac.uk:memory:12884901888.000000
+#4486192:1:RESERVING:1415625249:173700:H:node-o09.data.legion.ucl.ac.uk:xex:12.000000
+#
+
+# NB: it looks like the source_host can also be a PE or something? Will have to check with William and mutate it based on the P event_source
+SCHEDULE_LINE %{JOB_NUMBER}:%{TASK_ID}:(?<schedule_action>[A-Z]+):%{REPORTING_TIME}:%{NONNEGINT:NUMBER_OF_MYSTERY:int}:(?<event_source_type>[A-Z]):(?<queue_name>[^@.]*@|)%{HOSTNAME:source_host}:(?<resource>[a-z]+):%{NUMBER:resource_quantity:float}
+
+# Can be a hostname or a queue@hostname -- make sure you pick up and separate both
+
+
+# Action list:
+#  RUNNING
+#  RESERVING
+#  STARTING
+#  SUSPENDED
+# 
+# Also some lines are just (Without quotes):
+# "::::::::"
+
+
+
