@@ -1,0 +1,21 @@
+LUSTRE_OBJECT %{WORD}(-%{WORD}){1,3}
+LUSTRE_LNET %{IP}@%{WORD}
+LUSTRE_SOURCECODE (%{USERNAME}.c:%{INT})
+LUSTRE_ERRCODE rc (=)? (%{INT}|%{INT}/%{INT})
+LUSTRE_LOGPREFIX1 (Lustre|LustreError|LNetError): (%{WORD}-%{WORD}: )?%{LUSTRE_OBJECT:lustre_object}:
+LUSTRE_LOGPREFIX2 (Lustre|LustreError|LNet|LNetError):%{SPACE}?%{WORD}:%{WORD}:\(%{LUSTRE_SOURCECODE:lustre_source}:%{USERNAME:lustre_function}\(\)\)
+LUSTRE_LOGPREFIX (%{LUSTRE_LOGPREFIX1}|%{LUSTRE_LOGPREFIX2})
+
+LUSTRE_SYSLOG_NO_CONNECT %{LUSTRE_LOGPREFIX} not available for connect from %{LUSTRE_LNET:lustre_host} \(no target\)
+LUSTRE_SYSLOG_CLIENT_EVICT %{LUSTRE_LOGPREFIX} This client was evicted by %{LUSTRE_OBJECT}; in progress operations using this service will fail\.
+LUSTRE_SYSLOG_FAIL %{LUSTRE_LOGPREFIX} %{LUSTRE_OBJECT:lustre_object}: %{USERNAME} failed for resource %{DATA:lustre_resource}: %{LUSTRE_ERRCODE}
+LUSTRE_SYSLOG_IO_ERROR %{LUSTRE_LOGPREFIX} Bulk IO write error with %{UUID:lustre_uuid} \(at %{LUSTRE_LNET:lustre_host}\), client will retry: %{LUSTRE_ERRCODE}
+LUSTRE_SYSLOG_MISC %{LUSTRE_LOGPREFIX} @@@ %{GREEDYDATA}: %{LUSTRE_ERRCODE} %{GREEDYDATA} %{WORD}->%{UUID:lustre_uuid}@%{LUSTRE_LNET:lustre_host}:%{GREEDYDATA}
+LUSTRE_SYSLOG_COMMS_ERROR %{LUSTRE_LOGPREFIX} Communicating with %{LUSTRE_LNET:lustre_host}, %{GREEDYDATA}
+LUSTRE_SYSLOG_CLIENT_MESSAGE %{LUSTRE_LOGPREFIX} Client %{UUID:lustre_uuid} \(at %{LUSTRE_LNET:lustre_host}\) reconnecting
+LUSTRE_SYSLOG_RECONNECT_REFUSED %{LUSTRE_LOGPREFIX} Client %{UUID:lustre_uuid} \(at %{LUSTRE_LNET:lustre_host}\) refused reconnection, %{GREEDYDATA}
+LUSTRE_SYSLOG_CONNECTION_RESTORED %{LUSTRE_LOGPREFIX} Connection restored to %{LUSTRE_OBJECT} \(at %{LUSTRE_LNET:lustre_host}\)
+# This one doesn't seem sufficiently defined and doesn't appear in any of the logs I have, so commenting it for now. It's in the source of these Lustre patterns.
+# LUSTRE_SYSLOG_MOUNTED Lustre: Mounted %{LUSTRE_OBJECT:lustre_object}
+LUSTRE_SYSLOG_RSRC_CHANGED %{LUSTRE_LOGPREFIX} binary \[%{DATA:lustre_resource}\] changed while waiting for the page fault lock
+LUSTRE_SYSLOG_MISC_FALLTHROUGH %{LUSTRE_LOGPREFIX} %{GREEDYDATA}

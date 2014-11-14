@@ -1,0 +1,20 @@
+#examples:
+#node-e08-syslog.log:2014-10-29T10:27:29.455960+00:00 node-e08 mpirun: (ipath/mpirun)[29156]: Rank  239 (node-c29        ) caused MPI progress Quiescence. 
+#node-g60-syslog.log:2014-10-29T09:41:08.493837+00:00 node-g60 vasp.5.3.legion.SOC: (ipath/MPI)[6056]: Socket to spawner closed unexpectedly.  Aborting 
+#node-r28-syslog.log:2014-10-29T03:53:22.881919+00:00 node-r28 mpirun: (ipath/mpirun)[32279]: node-r21:16 node program unexpectedly quit: Exiting. 
+#node-s14-syslog.log:2014-10-29T09:56:54.090852+00:00 node-s14 dscf_mpi: (ipath/PSM)[3974]: Driver initialization failure on /dev/ipath (err=23)
+#node-a01-syslog.log:2014-10-29T03:20:47.028158+00:00 node-a01 mdrun_mpi: (ipath/PSM)[20055]: Received out-of-context eager message(s) from a stray process running on LID 0xf6 ptype=0x1 subop=0x10 elapsed=59878.974s (err=49)
+#node-a01-syslog.log:2014-10-29T03:20:47.081825+00:00 node-a01 mdrun_mpi: (ipath/PSM)[20054]: Received 39741 out-of-context eager message(s) from stray process PID=11075 running on host 10.143.6.17 (LID 0xf6, ptype=0x1, subop=0x22, elapsed=59879.027s)  (err=49)
+
+HEXNUM 0x[0-9a-fA-F]+
+
+IPATH_PREFIX %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} %{PATH:executable}: \((?<message_type>ipath)/(?<message_subtype>[^)]+)\)\[%{NONNEGINT:host_pid}\]: 
+
+IPATH_QUIESCENCE %{IPATH_PREFIX} Rank[ ]+%{NONNEGINT:rank} \(%{HOSTNAME:blame_host}[ ]+\) caused MPI progress Quiescence\.
+IPATH_SOCKET_CLOSE %{IPATH_PREFIX} Socket to spawner closed unexpectedly.  Aborting
+IPATH_UNEXPECTED_QUIT %{IPATH_PREFIX} %{HOSTNAME:blame_host}:%{POSINT:node_count} node program unexpectedly quit: Exiting\.
+IPATH_DRIVER_INIT_FAIL %{IPATH_PREFIX} Driver initialization failure on %{PATH:device_path} \(err=%{NONNEGINT:error_code}\)
+IPATH_OOC_EAGER_MSG_LID %{IPATH_PREFIX} Received out-of-context eager message\(s\) from a stray process running on LID %{HEXNUM:lid} ptype=%{HEXNUM:ptype} subop=%{HEXNUM:subop} elapsed=%{NUMBER:elapsed}s \(err=%{NONNEGINT:error_code}\)
+IPATH_OOC_EAGER_MSG_HOST %{IPATH_PREFIX} Received %{NONNEGINT:error_count} out-of-context eager message\(s\) from stray process PID=%{NONNEGINT:blame_pid} running on host %{IP:blame_ip} \(LID %{HEXNUM:lid}, ptype=%{HEXNUM:ptype}, subop=%{HEXNUM:subop}, elapsed=%{NUMBER:elapsed}s\)
+
+

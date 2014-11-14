@@ -1,0 +1,20 @@
+#### Patterns for things we don't care about
+
+## crond
+# e.g.
+# 2014-10-29T03:30:01.856047+00:00 node-u30 crond[23446]: (root) CMD ([ -x /shared/ucl/libexec/node_temp.pl ] && /shared/ucl/libexec/node_temp.pl > /dev/null 2>&1)
+CROND_SYSLOG %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>crond)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
+
+## crond updated timestamp
+# e.g.
+# 2014-10-29T04:02:01.809031+00:00 node-007 anacron[25146]: Updated timestamp for job `cron.daily' to 2014-10-29
+ACRON_SYSLOG %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>anacron)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
+
+## sshd
+# e.g.
+# 2014-10-29T09:59:42.704033+00:00 node-u30 sshd[4744]: Accepted hostbased for root from 10.143.23.12 port 40026 ssh2
+# We *might* want to match this, so I'm going to write the proper expression
+# Also I'm not entirely sure what that last field is
+SSHD_SYSLOG %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>sshd)\[%{NONNEGINT:pid}\]: Accepted hostbased for %{USERNAME:username} from %{IP:source_ip} port %{NONNEGINT:source_port} %{DATA:method}
+
+

@@ -1,0 +1,2 @@
+SYSLOG_SGE_JOB_START_FINISH %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} logger: SGE (?<action>started job|cleaned up job) \[%{POSINT:number}.%{INT:TASK_ID}\] \(%{DATA:tags}\), user %{USERNAME:owner}, load_avg %{NUMBER:load_avg}
+
