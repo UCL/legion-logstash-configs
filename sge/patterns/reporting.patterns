@@ -80,10 +80,10 @@ JOB_NAME %{SGE_NAME:job_name}
 JOB_NUMBER %{POSINT:job_number:int}
 ACCOUNT %{SGE_NAME:account}
 PRIORITY %{NUMBER:priority:int}
-SUBMISSION_TIME %{POSINT:raw_submission_time:int}
-START_TIME %{NONNEGINT:raw_start_time:int}
-END_TIME %{NONNEGINT:raw_end_time:int}
-EVENT_TIME %{NONNEGINT:raw_event_time:int}
+SUBMISSION_TIME %{POSINT:raw_submission_time}
+START_TIME %{NONNEGINT:raw_start_time}
+END_TIME %{NONNEGINT:raw_end_time}
+EVENT_TIME %{NONNEGINT:raw_event_time}
 EXECUTION_STATUS %{NUMBER:execution_status:int}
 EXIT_STATUS %{NONNEGINT:exit_status:int}
 
@@ -120,14 +120,14 @@ USAGE_IOW %{NUMBER:usage_iow:float}
 PE_TASK_ID (?<pe_task_id>[0-9]+|NONE)
 USAGE_MAXVMEM %{NUMBER:usage_maxvmem:float}
 ADVANCE_RESERVATION_ID %{NONNEGINT:advance_reservation_id}
-ADVANCE_RESERVATION_SUBMISSION_TIME %{NONNEGINT:raw_advance_reservation_submission_time:int}
+ADVANCE_RESERVATION_SUBMISSION_TIME %{NONNEGINT:raw_advance_reservation_submission_time}
 
 JOB_EVENT_TYPE %{WORD:job_event_type}
 STATE_AFTER_EVENT (?<state_after_event>[A-Za-z]*)
 OPERATOR %{SGE_NAME:operator}
 OPERATOR_HOST %{HOSTNAME:operator_host}
 
-MESSAGE (?<message>[^:]*)
+EVENT_MESSAGE (?<event_message>[^:]*)
 
 QUEUE_HOSTNAME %{HOSTNAME:queue_hostname}
 
@@ -142,7 +142,7 @@ ACCOUNTING_LINE %{QUEUE_NAME}:%{EXECUTION_HOST}:%{GROUP}:%{OWNER}:%{JOB_NAME}:%{
 NEW_JOB_LINE %{SUBMISSION_TIME}:%{JOB_NUMBER}:%{TASK_ID}:%{PE_TASK_ID}:%{JOB_NAME}:%{OWNER}:%{GROUP}:%{PROJECT}:%{DEPARTMENT}:%{ACCOUNT}:%{PRIORITY}
 
 #1414555483:job_log:1414555483:deleted:4479798:5758:NONE:T:scheduler:nfs-1.data.legion.ucl.ac.uk:0:1024:1414318546:GREAT-DES:ucabtok:users:AllUsers:defaultdepartment:ucl_jsv4h;S=0;T=0;W=1.0;X=1.0;Y=1.0;V=0;Z=1.0;U=1.0:job deleted by schedd
-JOB_LOG_LINE %{EVENT_TIME}:%{JOB_EVENT_TYPE}:%{JOB_NUMBER}:%{TASK_ID}:%{PE_TASK_ID}:%{STATE_AFTER_EVENT}:%{OPERATOR}:%{OPERATOR_HOST}:0:1024:%{SUBMISSION_TIME}:%{JOB_NAME}:%{OWNER}:%{GROUP}:%{PROJECT}:%{DEPARTMENT}:%{ACCOUNT}:%{MESSAGE}
+JOB_LOG_LINE %{EVENT_TIME}:%{JOB_EVENT_TYPE}:%{JOB_NUMBER}:%{TASK_ID}:%{PE_TASK_ID}:%{STATE_AFTER_EVENT}:%{OPERATOR}:%{OPERATOR_HOST}:0:1024:%{SUBMISSION_TIME}:%{JOB_NAME}:%{OWNER}:%{GROUP}:%{PROJECT}:%{DEPARTMENT}:%{ACCOUNT}:%{EVENT_MESSAGE}
 # The 0:1024 section in JOB_LOG_LINE is seemingly in every line, and is in the spot where the man pages say "state_time", a field reserved for 'later use', should be.
 QUEUE_LINE %{QUEUE_NAME}:%{QUEUE_HOSTNAME}:%{EVENT_TIME}:%{STATE_AFTER_EVENT}
 QUEUE_CONSUMABLE_LINE %{QUEUE_NAME}:%{QUEUE_HOSTNAME}:%{EVENT_TIME}:%{STATE_AFTER_EVENT}:%{CONSUMABLES}
