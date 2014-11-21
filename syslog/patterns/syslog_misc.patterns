@@ -1,0 +1,5 @@
+# Example:
+#2014-10-29T08:26:33.129853+00:00 node-a01 kernel: ima_file_free: sdb open/free imbalance (r:-1 w:0 o:-1 f:0)
+
+SYSLOG_IMA_FILE_ERR %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} kernel: (?<message_type>ima_file_free): sdb open/free imbalance \(r:%{NUMBER:r} w:%{NUMBER:w} o:%{NUMBER:o} f:%{NUMBER:f}\)
+

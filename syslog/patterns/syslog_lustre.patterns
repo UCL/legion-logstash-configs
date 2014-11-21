@@ -4,7 +4,7 @@ LUSTRE_SOURCECODE (%{USERNAME}.c:%{INT})
 LUSTRE_ERRCODE rc (=)? (%{INT}|%{INT}/%{INT})
 LUSTRE_LOGPREFIX1 (Lustre|LustreError|LNetError): (%{WORD}-%{WORD}: )?%{LUSTRE_OBJECT:lustre_object}:
 LUSTRE_LOGPREFIX2 (Lustre|LustreError|LNet|LNetError):%{SPACE}?%{WORD}:%{WORD}:\(%{LUSTRE_SOURCECODE:lustre_source}:%{USERNAME:lustre_function}\(\)\)
-LUSTRE_LOGPREFIX (%{LUSTRE_LOGPREFIX1}|%{LUSTRE_LOGPREFIX2})
+LUSTRE_LOGPREFIX kernel: (%{LUSTRE_LOGPREFIX1}|%{LUSTRE_LOGPREFIX2})
 
 LUSTRE_SYSLOG_NO_CONNECT %{LUSTRE_LOGPREFIX} not available for connect from %{LUSTRE_LNET:lustre_host} \(no target\)
 LUSTRE_SYSLOG_CLIENT_EVICT %{LUSTRE_LOGPREFIX} This client was evicted by %{LUSTRE_OBJECT}; in progress operations using this service will fail\.

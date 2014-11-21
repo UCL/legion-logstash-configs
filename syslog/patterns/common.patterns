@@ -1,0 +1,3 @@
+# Just about the most general regex possible. Maybe it would be better to cut this down a bit.
+FILENAME ([^\0 !$`&*()+]|\\[ !$`&*()|+])+
+HEXNUM 0x[0-9a-fA-F]+
