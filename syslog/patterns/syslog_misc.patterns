@@ -1,15 +1,15 @@
 # Example:
 #2014-10-29T08:26:33.129853+00:00 node-a01 kernel: ima_file_free: sdb open/free imbalance (r:-1 w:0 o:-1 f:0)
 
-SYSLOG_IMA_FILE_ERR %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} kernel: (?<message_type>ima_file_free): sdb open/free imbalance \(r:%{NUMBER:r} w:%{NUMBER:w} o:%{NUMBER:o} f:%{NUMBER:f}\)
+SYSLOG_IMA_FILE_ERR %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>kernel): (?<message_type>ima_file_free): sdb open/free imbalance \(r:%{NUMBER:r} w:%{NUMBER:w} o:%{NUMBER:o} f:%{NUMBER:f}\)
 
 # Example:
 #2014-10-29T08:10:04.407414+00:00 node-513 OpenSM[12225]: SM port is down
-SYSLOG_OPENSM_DOWN %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} OpenSM\[%{POSINT:pid}\]: SM port is down
+SYSLOG_OPENSM_PORT_DOWN %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>OpenSM)\[%{POSINT:pid}\]: SM port is down
 
 # Example:
 #2014-10-29T05:20:11.740868+00:00 node-036 modprobe: FATAL: Error inserting nvidia (/lib/modules/2.6.32-400.29.3.el5uek/kernel/drivers/video/nvidia.ko): No such device
-SYSLOG_GPU_MODULE_LOAD_FAILED %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} modprobe: FATAL: Error inserting nvidia \(%{PATH:driver_path}\): No such device
+SYSLOG_GPU_MODULE_LOAD_FAILED %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>modprobe): FATAL: Error inserting nvidia \(%{PATH:driver_path}\): No such device
 
 
 #### Patterns for things we don't care about
@@ -17,29 +17,29 @@ SYSLOG_GPU_MODULE_LOAD_FAILED %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_sour
 ## crond
 # e.g.
 # 2014-10-29T03:30:01.856047+00:00 node-u30 crond[23446]: (root) CMD ([ -x /shared/ucl/libexec/node_temp.pl ] && /shared/ucl/libexec/node_temp.pl > /dev/null 2>&1)
-SYSLOG_CROND %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>crond)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
+SYSLOG_CROND %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>crond)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
 
 ## crond updated timestamp
 # e.g.
 # 2014-10-29T04:02:01.809031+00:00 node-007 anacron[25146]: Updated timestamp for job `cron.daily' to 2014-10-29
-SYSLOG_ACRON %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>anacron)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
+SYSLOG_ACRON %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>anacron)\[%{NONNEGINT:pid}\]: %{GREEDYDATA}
 
 ## sshd
 # e.g.
 # 2014-10-29T09:59:42.704033+00:00 node-u30 sshd[4744]: Accepted hostbased for root from 10.143.23.12 port 40026 ssh2
 # We *might* want to match this, so I'm going to write the proper expression
 # Also I'm not entirely sure what that last field is
-SYSLOG_SSHD %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>sshd)\[%{NONNEGINT:pid}\]: Accepted hostbased for %{USERNAME:username} from %{IP:source_ip} port %{NONNEGINT:source_port} %{DATA:method}
+SYSLOG_SSHD %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>sshd)\[%{NONNEGINT:pid}\]: Accepted hostbased for %{USERNAME:username} from %{IP:source_ip} port %{NONNEGINT:source_port} %{DATA:method}
 
 ## gmond
 # e.g.
 # 2014-10-29T03:30:52.892421+00:00 node-u30 /usr/local/ganglia-bin/sbin/gmond[11411]: Error 1 sending the modular data for cpu_user  
 # 2014-10-29T03:30:56.282431+00:00 node-u30 /usr/local/ganglia-bin/sbin/gmond[11411]: Error 1 sending the modular data for heartbeat 
 # Again, we might want to match this later.
-SYSLOG_GMOND_ERROR %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} %{PATH:executable}\[%{NONNEGINT:pid}\]: Error %{NONNEGINT:error_code} sending the modular data for %{FILENAME:module}
+SYSLOG_GMOND_ERROR %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} %{PATH:log_source_name}\[%{NONNEGINT:pid}\]: Error %{NONNEGINT:error_code} sending the modular data for %{FILENAME:module}
 
 ## Couldn't find graphics card
 # e.g.
 # 2014-10-29T09:27:14.729762+00:00 node-021 kernel: NVRM: No NVIDIA graphics adapter found!
-SYSLOG_NO_GPU %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<executable>kernel): (?<kernel_module>NVRM): (?<no_gpu>No NVIDIA graphics adapter found)!
+SYSLOG_NO_GPU %{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:log_source_hostname} (?<log_source_name>kernel): NVRM: (?<no_gpu>No NVIDIA graphics adapter found)!
 
